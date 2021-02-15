@@ -32,8 +32,8 @@ public class Case {
 
     // GETTER
     public Card getContains() {
-        if ( this.type == TypeCase.Occuped) return contains;
-        return null;
+        /*if ( this.type == TypeCase.Occuped) */return contains;
+       // return null;
     }
 
     // SETTER

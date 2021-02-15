@@ -7,7 +7,12 @@ public class Deck {
 
     ArrayList<Card> deck;
 
+    public final static int maxCard = 5;
+    public final static Deck defaultDeck = new Deck(new ArrayList<Card>(5));
+
     public Deck(){this.deck = new ArrayList<Card>();}
+
+    public Deck(ArrayList<Card> d){this.deck =d;}
 
     public void AddCard( Card c) { this.deck.add(c);}
 

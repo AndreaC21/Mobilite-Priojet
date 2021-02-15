@@ -1,16 +1,24 @@
 package com.example.mobilite_projet;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 
 public class Card {
 
     private int[] values; //up,down,left,right;
-    private String pathImage;
+    private Bitmap image;
     private Color borderColor;
 
-    public Card(){}
 
-    public Card(int up,int down,int left,int right,String pathImage)
+
+    public Card(){
+
+    }
+
+
+    public Card(int up,int down,int left,int right)
     {
         this.values = new int[4];
         this.values[0] = up;
@@ -25,7 +33,6 @@ public class Card {
     public int getDown() { return this.values[1]; }
     public int getLeft() { return this.values[2]; }
     public int getRight() { return this.values[3]; }
-    public String getPathImage() { return pathImage; }
     public Color getBorderColor() { return borderColor; }
 
     // SETTER

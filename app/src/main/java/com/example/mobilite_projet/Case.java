@@ -2,21 +2,21 @@ package com.example.mobilite_projet;
 
 public class Case {
 
-    private enum TypeCase { Void,Occuped}
-    private TypeCase type; // empty or occuped
+
+    private boolean empty;
     private Card contains;
     private boolean[] murs; //up,down,left,right;
 
     public Case()
     {
-        this.type = TypeCase.Void;
+        this.empty = true;
         this.contains = null;
         this.murs = new boolean[]{false,false,false,false};
     }
 
     public Case(int positionMur)
     {
-        this.type = TypeCase.Void;
+        this.empty = true;
         this.contains = null;
         this.murs = new boolean[]{false,false,false,false};
         this.murs[positionMur] = true;
@@ -24,7 +24,7 @@ public class Case {
     }
     public Case(boolean[] m)
     {
-        this.type = TypeCase.Void;
+        this.empty = true;
         this.contains = null;
         if ( m.length == 4) this.murs = m;
 
@@ -39,7 +39,9 @@ public class Case {
     // SETTER
     public void SetContains(Card c)
     {
-        if (this.available()) this.contains = c;
+
+        if (this.empty) this.contains = c;
+        this.empty = false;
     }
 
     // index = 0,1,2,3 == up,down,left,right
@@ -49,7 +51,7 @@ public class Case {
     }
 
     // FUNCTION
-    public boolean available() { return this.type == TypeCase.Void;}
+    public boolean isEmpty() { return this.empty;}
 
     //
 }

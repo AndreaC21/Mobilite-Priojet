@@ -8,9 +8,15 @@ public class Deck {
     ArrayList<Card> deck;
 
     public final static int maxCard = 5;
-    public final static Deck defaultDeck = new Deck(new ArrayList<Card>(5));
 
-    public Deck(){this.deck = new ArrayList<Card>();}
+    public Deck(Player p){
+
+        this.deck = new ArrayList<Card>(5);
+        for (int i=0; i < this.deck.size();++i)
+        {
+            this.deck.set(i,new Card(p));
+        }
+    }
 
     public Deck(ArrayList<Card> d){this.deck =d;}
 

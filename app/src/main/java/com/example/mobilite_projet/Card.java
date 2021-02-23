@@ -9,11 +9,26 @@ public class Card {
 
     private int[] values; //up,down,left,right;
     private Bitmap image;
-    private Color borderColor;
+    private int borderColor;
+    private Player belong;
 
 
+    public Card(Player p){
+        this.values = new int[4];
+        this.values[0] = 0;
+        this.values[1] = 0;
+        this.values[2] = 0;
+        this.values[3] = 0;
+        this.belong =p;
+
+    }
 
     public Card(){
+        this.values = new int[4];
+        this.values[0] = 0;
+        this.values[1] = 0;
+        this.values[2] = 0;
+        this.values[3] = 0;
 
     }
 
@@ -33,11 +48,12 @@ public class Card {
     public int getDown() { return this.values[1]; }
     public int getLeft() { return this.values[2]; }
     public int getRight() { return this.values[3]; }
-    public Color getBorderColor() { return borderColor; }
+    public int getBorderColor() { return 0xff_00_00_00;}//return this.belong.getColor(); }
 
     // SETTER
 
-    public void setBorderColor(Color c) { this.borderColor = c;}
+    public void setBorderColor(int c) { this.borderColor = c;}
+    public void BelongTo(Player p) { this.belong = p;}
 
     //// FUNCTION CONTACT
 

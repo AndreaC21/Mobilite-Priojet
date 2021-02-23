@@ -12,16 +12,17 @@ public class Player {
 
     public Player(String name,int c,Deck d)
     {
-        this.borderColor =c;
+        this.borderColor = c;
         this.name = name;
         CreateDeck();
     }
 
     public Deck getDeck(){ return this.deck;}
+    public int getColor() { return this.borderColor;}
 
     public void CreateDeck()
     {
-        this.deck = new Deck();
+        this.deck = new Deck(this);
         this.deck.AddCard(new Card(1,1,1,1));
         this.deck.AddCard(new Card(2,2,2,2));
         this.deck.AddCard(new Card(3,3,3,3));

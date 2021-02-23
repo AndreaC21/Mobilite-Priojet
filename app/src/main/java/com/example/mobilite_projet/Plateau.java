@@ -2,17 +2,22 @@ package com.example.mobilite_projet;
 
 public class Plateau {
 
+    public final static int PlateauSize = 9;
     private Case[] plateau;
 
     public Plateau()
     {
-        defaultPlateau();
+        this.plateau =new Case[9] ;
+        for ( int i=0; i < PlateauSize ; ++i)
+        {
+            this.plateau[i] = new Case();
+        }
+        this.plateau[4].SetContains(new Card());
     }
-    public final static int PlateauSize = 9;
+
+
 
     // GETTER
-
-    public void defaultPlateau() { this.plateau =new Case[9] ; }
 
     public Case getCase(int index) { return this.plateau[index];}
 

@@ -25,6 +25,7 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
     private Bitmap imgCard;
 
     private float deckWidth,deckHeight,deckMargin;
+    private float cardSize;
     private float gridSeparatorSize,cellWidth,gridWidth;
 
     private Paint paint = new Paint( Paint.ANTI_ALIAS_FLAG );
@@ -65,8 +66,9 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
         super.onSizeChanged( width, height, oldw, oldh );
 
         deckMargin = width * 0.025f;
+        cardSize =  width * 0.35f;
         deckWidth = (width - (Game.BOARD_COUNT + 1) * deckMargin) / Game.BOARD_COUNT;
-        deckHeight = deckWidth * 1.4f;
+        deckHeight = deckWidth;
         gridSeparatorSize = (width / 9f) / 20f;
 
         gridWidth = width;                                  // Size of the grid (it's a square)
@@ -75,74 +77,54 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
         try {
             int imageSize = (int) (deckWidth * 0.66);
 
-
             imgCard = BitmapFactory.decodeResource(getResources(), R.drawable.empty_card);
-            imgCard = Bitmap.createScaledBitmap(imgCard, imageSize, imageSize, true);
+            imgCard = Bitmap.createScaledBitmap(imgCard, (int)cardSize, (int)cardSize, true);
 
         } catch (Exception exception) {
             Log.e("ERROR", "Cannot load card images");
         }
 
     }
-    /**
-     * Calcul de la "bounding box" de la stack spécifiée en paramètre.
-     */
-    private RectF computePlateau( int index ) {
-        float x = deckMargin + (deckWidth + deckMargin) * index;
-        float y = getHeight() * 0.17f;
-        return new RectF( x, y, x+deckWidth, y+deckHeight );
-    }
+
     /**
      * Calcul de la "bounding box" du deck spécifié en paramètre.
      */
     private RectF computeDeckRect( int cardIndex ) {
-        float x = deckMargin + (deckWidth + deckMargin) * cardIndex;
-        float y = getHeight() * 0.30f + cardIndex * computeStepY();
+        float x = deckMargin + cardSize *0.5f * cardIndex;
+        float y = getHeight() * 0.77f ;
         return new RectF( x, y, x+deckWidth, y+deckHeight );
-    }
-    /**
-     * Calcul du décalage en y pour toutes les cartes d'un deck.
-     */
-    public float computeStepY() {
-        return ( getHeight()*0.9f - getHeight()*0.3f ) / 17f;
     }
 
     public void drawCard(Canvas canvas, Card card, float x, float y ) {
         float cornerWidth = deckWidth / 10f;
 
-        RectF rectF = new RectF( x, y, x + deckWidth, y + deckHeight );
-
-        // Si card == null alors on ne trace que le contour de la carte
-        if ( card == null ) {
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setColor(0xff_40_40_40);
-            canvas.drawRoundRect(rectF, cornerWidth, cornerWidth, paint);
-            paint.setStyle(Paint.Style.FILL);
-            return;
-        }
-
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor( 0xff_a0_c0_a0 );
-        canvas.drawRoundRect(rectF, cornerWidth, cornerWidth, paint);
-
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor( 0xff_00_00_00 );
-        canvas.drawRoundRect(rectF, cornerWidth, cornerWidth, paint);
+        RectF rectF = new RectF( x, y, x + cardSize, y + cardSize );
 
         Bitmap image = imgCard;
+        canvas.drawBitmap(image,x,y,paint);
         int color = 0xff_00_00_00;
         paint.setStyle(Paint.Style.FILL);
-        paint.setTextSize( deckWidth / 2.4f );
+        paint.setTextSize( cardSize / 6f );
         paint.setFakeBoldText( true );
         paint.setTextAlign( Paint.Align.LEFT );
         paint.setColor( color );
-        canvas.drawText( "1", x + deckWidth * 0.1f, y + deckHeight * 0.32f, paint);
-        canvas.drawText( "0", x + deckWidth * 0.3f, y + deckHeight * 0.32f, paint);
 
+        // UP
+        canvas.drawText( String.valueOf(card.getUp()), x + cardSize *0.92f /2, y + cardSize *0.15f, paint);
+        //DOWN
+        canvas.drawText( String.valueOf(card.getDown()), x + cardSize *0.92f /2, y + cardSize * 0.94f, paint);
+        // LEFT
+        canvas.drawText( String.valueOf(card.getLeft()), x + cardSize *0.07f, y + cardSize *0.55f, paint);
+        //RIGHT
+        canvas.drawText( String.valueOf(card.getRight()), x + cardSize *0.87f, y + cardSize * 0.55f, paint);
 
-        canvas.drawBitmap( image, x + (deckWidth - image.getWidth())/ 2f,
-                y + (deckHeight*0.9f - image.getHeight()) , paint );
         paint.setFakeBoldText( false );
+
+        // BORDER
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(10);
+        paint.setColor(0xff_40_40_40);
+        canvas.drawRect(rectF, paint);
 
     }
     @Override
@@ -163,53 +145,62 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
         RectF rectF = new RectF(0, 0, getWidth(), getHeight() * 0.08f);
         canvas.drawRect(rectF, paint);
 
+       /*
         paint.setColor(redColor);
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setTextSize((int) (getWidth() / 12));
         canvas.drawText(getResources().getString(R.string.app_name),widthDiv10 * 5, (int) (heightDiv10 * 0.4), paint);
+        */
 
         paint.setColor(headerForegroundColor);
         paint.setTextAlign(Paint.Align.LEFT);
         paint.setTextSize(getWidth() / 20f);
         paint.setStrokeWidth(1);
-        canvas.drawText("Tour: ", (int) (widthDiv10 * 0.5), (int) (heightDiv10 * 0.7), paint);
+        canvas.drawText("Tour: "+Game.getNbTurn(), (int) (widthDiv10 * 0.5), (int) (heightDiv10 * 0.7), paint);
 
         paint.setTextAlign(Paint.Align.RIGHT);
-        canvas.drawText("PlayerName", (int) (widthDiv10 * 9.5), (int) (heightDiv10 * 0.7), paint);
+        canvas.drawText("AdversaireName", (int) (widthDiv10 * 9.5), (int) (heightDiv10 * 0.7), paint);
 
         // --- Draw the Plateau ---
 
         //// --- GRID ----
         paint.setColor( Color.BLACK );
         paint.setStrokeWidth( gridSeparatorSize );
+        float yStart = getHeight()*0.19f;
+        float yEnd = yStart*3f;
         for( int i=1; i<=4; i++ ) {
-            canvas.drawLine( i*(cellWidth*3),  360, i*(cellWidth*3), cellWidth*9+360, paint );
-            canvas.drawLine( i,i*(cellWidth*3), cellWidth*9, i*(cellWidth*3), paint );
-        }
-        //// ---- CONTENU ----
+            //Verticale
+            canvas.drawLine( i*(cellWidth*3),  yStart, i*(cellWidth*3), yEnd+yStart, paint );
 
+            //Horizontale
+            canvas.drawLine( i,i*yStart, getWidth(), i*yStart, paint );
+        }
+        
+        //// ---- CONTENU ----
         Plateau p = Game.getPlateau();
 
-        for ( int i = 0; i < Plateau.PlateauSize;i++ ) {
+        for ( int i = 0; i < Plateau.PlateauSize; ++i ) {
             Case c = p.getCase(i);
-            if ( c.available()==false)
+            if ( c !=null && c.isEmpty()==false)
             {
-                rectF = computePlateau(i);
-                drawCard(canvas, c.getContains(), rectF.left, rectF.top);
+                float x =  getHeight()* 0.19f * (i %3);
+                float y = getHeight() * 0.19f;
+                if (i>2 && i<=5)  y *= 2;
+                else if (i>5 ) y*=3;
+
+                drawCard(canvas, c.getContains(),x, y);
             }
 
-            //drawCard(canvas, card, rectF.left, rectF.top);
         }
-/*
+
         // --- Draw decks ---
         Deck deck = Game.getP1().getDeck();
 
         for ( int cardIndex = 0; cardIndex < Deck.maxCard; cardIndex++ ) {
                 Card card = deck.getCardByIndex(cardIndex);
                 rectF = computeDeckRect(cardIndex);
-                //drawCard(canvas, card, rectF.left, rectF.top);
+                drawCard(canvas, card, rectF.left, rectF.top);
         }
-*/
 
     }
 
@@ -249,15 +240,6 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
 
-        RectF rect;
-
-        // --- Un tap sur les cartes non retournées de la pioche ---
-        rect = computePlateau(4);
-        if ( rect.contains( e.getX(), e.getY() ) ) {
-            //poserla carte sur le plateau
-            postInvalidate();
-            return true;
-        }
 
         return true;
     }

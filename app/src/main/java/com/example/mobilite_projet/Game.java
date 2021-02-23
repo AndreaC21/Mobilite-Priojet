@@ -18,15 +18,17 @@ public class Game {
     }
     public Game()
     {
-        this.p1 = new Player("Andrea", Color.BLUE,Deck.defaultDeck);
-        this.p2 = new Player("Quentin", Color.RED,Deck.defaultDeck);
+        this.p1 = new Player("Andrea", Color.BLUE,new Deck(this.p1));
+        this.p2 = new Player("Quentin", Color.RED,new Deck(this.p2));
         this.plateau = new Plateau();
         this.nbTurn = 0;
     }
 
     public Player getP1(){return this.p1;}
+    public Player getP2(){return this.p2;}
 
-    public Plateau getPlateau(){return  this.plateau;}
+    public Plateau getPlateau(){return this.plateau;}
+    public String getNbTurn() { return String.valueOf(this.nbTurn);}
 
     // FUNCTION
 

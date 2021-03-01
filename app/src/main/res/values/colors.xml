@@ -15,5 +15,6 @@
     <!-- Les couleurs utilisées par l'application -->
     <color name="headerForegroundColor">#e0e0e0</color>
     <color name="backgroundColor">#3368ff</color>
+    <color name="PlateaubackgroundColor">#806f6c</color>
     <color name="redColor">#e61408</color>
 </resources>

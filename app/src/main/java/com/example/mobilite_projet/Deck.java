@@ -1,5 +1,7 @@
 package com.example.mobilite_projet;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -22,7 +24,20 @@ public class Deck {
 
     public void AddCard( Card c) { this.deck.add(c);}
 
-    public void RemoveCard(Card c) { this.deck.remove(c);}
+    public void RemoveCard(Card c) {
+
+        this.deck.remove(c);
+    }
+
+    public Card getCard(int index)
+    {
+        return this.deck.get(index);
+    }
+
+    public int Size()
+    {
+        return this.deck.size();
+    }
 
     public Card getCardByIndex(int index) { return this.deck.get(index);}
 

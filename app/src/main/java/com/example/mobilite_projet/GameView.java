@@ -17,9 +17,9 @@ import android.view.View;
 public class GameView extends View implements GestureDetector.OnGestureListener {
 
     private GestureDetector gestureDetector;
-    private int headerBackgroundColor;
-    private int headerForegroundColor;
+    private int headerBackgroundColor,headerForegroundColor;
     private int backgroundColor;
+    private int plateauBackgroundColor;
     private int redColor;
 
     private Bitmap imgCard;
@@ -27,6 +27,8 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
     private float deckWidth,deckHeight,deckMargin;
     private float cardSize;
     private float gridSeparatorSize,cellWidth,gridWidth;
+
+    private Card selectedCard;
 
     private Paint paint = new Paint( Paint.ANTI_ALIAS_FLAG );
 
@@ -56,6 +58,7 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
         headerForegroundColor = res.getColor( R.color.headerForegroundColor );
         backgroundColor = res.getColor( R.color.backgroundColor );
         redColor = res.getColor( R.color.redColor );
+        plateauBackgroundColor = res.getColor(R.color.PlateaubackgroundColor);
     }
 
     /**
@@ -66,7 +69,7 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
         super.onSizeChanged( width, height, oldw, oldh );
 
         deckMargin = width * 0.025f;
-        cardSize =  width * 0.35f;
+        cardSize =  width * 0.29f;
         deckWidth = (width - (Game.BOARD_COUNT + 1) * deckMargin) / Game.BOARD_COUNT;
         deckHeight = deckWidth;
         gridSeparatorSize = (width / 9f) / 20f;
@@ -94,9 +97,24 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
         float y = getHeight() * 0.77f ;
         return new RectF( x, y, x+deckWidth, y+deckHeight );
     }
+    private RectF computeBoardRect( int i ) {
+        float x =  deckMargin + getHeight()* 0.17f * (i %3);
+        float y = getHeight() * 0.18f;
+        if (i>2 && i<=5)  y *= 2;
+        else if (i>5 ) y*=3;
+        return new RectF( x, y, x+cardSize, y+cardSize );
+    }
 
+    public void drawCase(Canvas canvas,Case c,RectF rectF, int i)
+    {
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(5);
+        paint.setColor(0xff_00_00_00);
+        canvas.drawRect(rectF, paint);
+
+    }
     public void drawCard(Canvas canvas, Card card, float x, float y ) {
-        float cornerWidth = deckWidth / 10f;
+
 
         RectF rectF = new RectF( x, y, x + cardSize, y + cardSize );
 
@@ -123,7 +141,8 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
         // BORDER
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(10);
-        paint.setColor(0xff_40_40_40);
+        color = card.getBorderColor();//  Game.getP1().getColor();
+        paint.setColor(color);
         canvas.drawRect(rectF, paint);
 
     }
@@ -159,36 +178,45 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
         canvas.drawText("Tour: "+Game.getNbTurn(), (int) (widthDiv10 * 0.5), (int) (heightDiv10 * 0.7), paint);
 
         paint.setTextAlign(Paint.Align.RIGHT);
-        canvas.drawText("AdversaireName", (int) (widthDiv10 * 9.5), (int) (heightDiv10 * 0.7), paint);
+        canvas.drawText("Tour de "+Game.TurnOf(), (int) (widthDiv10 * 9.5), (int) (heightDiv10 * 0.7), paint);
 
         // --- Draw the Plateau ---
 
+        paint.setColor(plateauBackgroundColor);
+        rectF = new RectF(0, getHeight() * 0.15f, getWidth(), getHeight() * 0.75f);
+        canvas.drawRect(rectF, paint);
+
+
         //// --- GRID ----
-        paint.setColor( Color.BLACK );
+        /*paint.setColor( Color.BLACK );
         paint.setStrokeWidth( gridSeparatorSize );
         float yStart = getHeight()*0.19f;
         float yEnd = yStart*3f;
         for( int i=1; i<=4; i++ ) {
             //Verticale
-            canvas.drawLine( i*(cellWidth*3),  yStart, i*(cellWidth*3), yEnd+yStart, paint );
-
+            //canvas.drawLine( i*(cellWidth*3),  yStart, i*(cellWidth*3), yEnd+yStart, paint );
             //Horizontale
-            canvas.drawLine( i,i*yStart, getWidth(), i*yStart, paint );
-        }
+            //canvas.drawLine( i,i*yStart, getWidth(), i*yStart, paint );
+        }*/
         
         //// ---- CONTENU ----
         Plateau p = Game.getPlateau();
 
-        for ( int i = 0; i < Plateau.PlateauSize; ++i ) {
+        for ( int i = 0; i <Plateau.PlateauSize; ++i ) {
             Case c = p.getCase(i);
-            if ( c !=null && c.isEmpty()==false)
+            rectF = computeBoardRect(i);
+            if ( c !=null )//&& c.isEmpty()==false)
             {
-                float x =  getHeight()* 0.19f * (i %3);
+                /*float x =  getHeight()* 0.17f * (i %3);
                 float y = getHeight() * 0.19f;
                 if (i>2 && i<=5)  y *= 2;
                 else if (i>5 ) y*=3;
 
-                drawCard(canvas, c.getContains(),x, y);
+                drawCard(canvas, c.getContains(),x, y);*/
+                if( c.isEmpty()==false)
+                   drawCard(canvas, c.getContains(),rectF.left, rectF.top);
+                else
+                    drawCase(canvas,c,rectF,i);
             }
 
         }
@@ -196,12 +224,28 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
         // --- Draw decks ---
         Deck deck = Game.getP1().getDeck();
 
-        for ( int cardIndex = 0; cardIndex < Deck.maxCard; cardIndex++ ) {
+        RectF rectfFrontCard = new RectF();
+        for ( int cardIndex = 0; cardIndex < deck.Size(); cardIndex++ ) {
                 Card card = deck.getCardByIndex(cardIndex);
                 rectF = computeDeckRect(cardIndex);
+                if ( card==selectedCard) rectfFrontCard = rectF;
                 drawCard(canvas, card, rectF.left, rectF.top);
         }
+        if ( selectedCard!=null)
+            drawCard(canvas, selectedCard, rectfFrontCard.left, rectfFrontCard.top);
 
+        // --- DRAW Winner NAME ---
+
+        if (Game.isFinished())
+        {
+            Player winner = Game.getWinner();
+            paint.setColor( winner.getColor() );
+            paint.setTextAlign(Paint.Align.LEFT);
+            paint.setStrokeWidth(10);
+            paint.setTextSize(getWidth() / 10f);
+
+            canvas.drawText("Winner: "+winner.name, getWidth() * 0.1f, getHeight() * 0.85f, paint);
+        }
     }
 
 
@@ -239,6 +283,41 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
     // On réagit à un appui simple sur le widget.
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
+
+        RectF rectf;
+
+        //Clique sur le coin en haut a gauche d'un carte
+        Deck deck = Game.getP1().getDeck();
+        for ( int cardIndex = 0; cardIndex < deck.Size(); cardIndex++ ) {
+
+            rectf = computeDeckRect(cardIndex);
+            if ( rectf.contains(e.getX(), e.getY()) ) {
+                selectedCard = deck.getCardByIndex(cardIndex);
+                Log.d("tag", String.valueOf(cardIndex));
+                postInvalidate();
+                return true;
+            }
+        }
+        //Clique sur le plateau
+        Plateau p = Game.getPlateau();
+
+        if ( selectedCard != null)
+        {
+            for ( int i = 0; i <Plateau.PlateauSize; ++i ) {
+                Case c = p.getCase(i);
+                rectf = computeBoardRect(i);
+                if ( rectf.contains(e.getX(), e.getY()) ) {
+
+                    //p.SetCase(i, selectedCard);
+                    Game.PlayCard(i,selectedCard);
+                    deck.RemoveCard(selectedCard);
+                    selectedCard = null;
+                    postInvalidate();
+                    Game.nextPlayer();
+                    return true;
+                }
+            }
+        }
 
 
         return true;

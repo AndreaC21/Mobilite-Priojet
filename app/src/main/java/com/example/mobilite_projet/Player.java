@@ -4,9 +4,9 @@ import android.graphics.Color;
 
 public class Player {
 
-    private int borderColor;
-    private String name;
-    private Deck deck;
+    protected int borderColor;
+    protected String name;
+    protected Deck deck;
 
     public Player(){}
 

@@ -313,7 +313,7 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
                     deck.RemoveCard(selectedCard);
                     selectedCard = null;
                     postInvalidate();
-                    Game.nextPlayer();
+                    Game.nextPlayer(this);
                     return true;
                 }
             }

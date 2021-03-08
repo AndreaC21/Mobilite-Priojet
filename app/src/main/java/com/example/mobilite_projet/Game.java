@@ -1,6 +1,9 @@
 package com.example.mobilite_projet;
 
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.SystemClock;
+import android.view.View;
 
 public class Game {
 
@@ -8,6 +11,7 @@ public class Game {
     private Player p1,pTurn;
     private Ai_Player p2;
     private int nbTurn;
+    private Handler handler;
     public static final int BOARD_COUNT = 9;
 
     public Game(Player p1, Ai_Player p2)
@@ -25,6 +29,7 @@ public class Game {
         this.plateau = new Plateau();
         this.nbTurn = 0;
         this.pTurn = this.p1;
+        handler = new Handler();
     }
 
     public Player getP1(){return this.p1;}
@@ -53,7 +58,7 @@ public class Game {
         return String.valueOf(this.pTurn.name);
     }
 
-    public void nextPlayer()
+    public void nextPlayer(View view)
     {
         if ( this.pTurn == this.p1) this.pTurn = this.p2;
         else this.pTurn = this.p1;
@@ -62,8 +67,9 @@ public class Game {
 
         if ( this.pTurn==this.p2)
         {
-           this.p2.PlayCard(this);
-            nextPlayer();
+            this.p2.PlayCard(this);
+           nextPlayer(view);
+
         }
     }
 

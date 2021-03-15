@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/button_exit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text="menu"
+        android:layout_gravity="top|right"/>
+
+    <!-- Deck -->
+    <LinearLayout
+        android:id="@+id/premier"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:style="?android:attr/buttonBarStyle"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="top"
+        android:background="@android:color/holo_red_dark">
+
+        <Button
+            android:id="@+id/deck_card1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Card1"
+            android:style="?android:attr/buttonBarStyle" />
+
+        <Button
+            android:id="@+id/deck_card2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Card2"
+            android:style="?android:attr/buttonBarStyle" />
+
+        <Button
+            android:id="@+id/deck_card3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Card3"
+            android:style="?android:attr/buttonBarStyle" />
+
+        <Button
+            android:id="@+id/deck_card4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Card4"
+            android:style="?android:attr/buttonBarStyle" />
+
+        <Button
+            android:id="@+id/deck_card5"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Card5"
+            android:style="?android:attr/buttonBarStyle"/>
+    </LinearLayout>
+
+    <!-- Selection_card -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:style="?android:attr/buttonBarStyle"
+        android:background="@android:color/holo_blue_light"
+        android:layout_below="@id/premier"
+        android:orientation="horizontal"
+        android:paddingTop="20dp">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+
+            android:text="Select_Card_1"
+            android:gravity="top|left"/>
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="Select_Card_3"
+            android:gravity="top|left"/>
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="Select_Card_4"
+            android:gravity="top|left"/>
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="Select_Card_4"
+            android:gravity="top|left"/>
+
+
+    </LinearLayout>
+</RelativeLayout >

@@ -17,7 +17,7 @@
         android:id="@+id/premier"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:style="?android:attr/buttonBarStyle"
+
         android:layout_marginTop="50dp"
         android:layout_gravity="top"
         android:background="@android:color/holo_red_dark">
@@ -28,7 +28,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Card1"
-            android:style="?android:attr/buttonBarStyle" />
+           />
 
         <Button
             android:id="@+id/deck_card2"
@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Card2"
-            android:style="?android:attr/buttonBarStyle" />
+            />
 
         <Button
             android:id="@+id/deck_card3"
@@ -44,7 +44,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Card3"
-            android:style="?android:attr/buttonBarStyle" />
+           />
 
         <Button
             android:id="@+id/deck_card4"
@@ -52,7 +52,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Card4"
-            android:style="?android:attr/buttonBarStyle" />
+             />
 
         <Button
             android:id="@+id/deck_card5"
@@ -60,14 +60,13 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Card5"
-            android:style="?android:attr/buttonBarStyle"/>
+           />
     </LinearLayout>
 
     <!-- Selection_card -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:style="?android:attr/buttonBarStyle"
         android:background="@android:color/holo_blue_light"
         android:layout_below="@id/premier"
         android:orientation="horizontal"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -72,31 +73,46 @@
         android:orientation="horizontal"
         android:paddingTop="20dp">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+        <FrameLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp">
 
-            android:text="Select_Card_1"
-            android:gravity="top|left"/>
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="Select_Card_3"
-            android:gravity="top|left"/>
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="Select_Card_4"
-            android:gravity="top|left"/>
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="Select_Card_4"
-            android:gravity="top|left"/>
+            <ImageButton
+                android:id="@+id/button1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/empty_card" />
+
+            <TextView
+                android:id="@+id/card_up_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/card_1_1_1_1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_gravity="top|center"/>
+            <TextView
+                android:id="@+id/card_left_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="99"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_gravity="left|center"/>
+            <TextView
+                android:id="@+id/card_right_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="99"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_gravity="right|center"/>
+            <TextView
+                android:id="@+id/card_down_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="99"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_gravity="bottom|center"/>
+
+        </FrameLayout>
 
 
     </LinearLayout>

@@ -14,6 +14,7 @@ public class Game {
     private Handler handler;
     public static final int BOARD_COUNT = 9;
 
+
     public Game(Player p1, Ai_Player p2)
     {
         this.plateau = new Plateau();
@@ -30,6 +31,7 @@ public class Game {
         this.nbTurn = 0;
         this.pTurn = this.p1;
         handler = new Handler();
+
     }
 
     public Player getP1(){return this.p1;}

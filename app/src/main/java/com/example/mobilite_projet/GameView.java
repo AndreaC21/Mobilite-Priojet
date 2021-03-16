@@ -155,6 +155,8 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
         paint.setStyle(Paint.Style.FILL);
         canvas.drawRect(0, 0, getWidth(), getHeight(), paint);
 
+
+
         // --- Draw the Header ---
 
         float widthDiv10 = getWidth() / 10f;

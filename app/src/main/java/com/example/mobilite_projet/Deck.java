@@ -10,7 +10,16 @@ public class Deck {
     ArrayList<Card> deck;
 
     public final static int maxCard = 5;
+    public static Deck myDeck = new Deck();
 
+    public Deck()
+    {
+        this.deck = new ArrayList<Card>(5);
+        for (int i=0; i < this.deck.size();++i)
+        {
+            this.deck.set(i,new Card());
+        }
+    }
     public Deck(Player p){
 
         this.deck = new ArrayList<Card>(5);
@@ -46,6 +55,14 @@ public class Deck {
         Random rand = new Random();
         int randomIndex = rand.nextInt(this.deck.size() );
         return this.deck.get(randomIndex);
+    }
+
+    public void setPlayerBelong(Player p)
+    {
+        for (int i=0; i < this.deck.size();++i)
+        {
+            this.deck.get(i).BelongTo(p);
+        }
     }
 
 }

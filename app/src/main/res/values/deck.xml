@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="deck_card_0">
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </integer-array>
+    <integer-array name="deck_card_1">
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+    </integer-array>
+    <integer-array name="deck_card_2">
+        <item>3</item>
+        <item>3</item>
+        <item>3</item>
+        <item>3</item>
+    </integer-array>
+    <integer-array name="deck_card_3">
+        <item>4</item>
+        <item>4</item>
+        <item>4</item>
+        <item>4</item>
+    </integer-array>
+    <integer-array name="deck_card_4">
+        <item>5</item>
+        <item>5</item>
+        <item>5</item>
+        <item>5</item>
+    </integer-array>
+
+</resources>

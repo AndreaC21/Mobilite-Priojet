@@ -34,6 +34,14 @@ public class Card {
         this.borderColor = 0xff_00_00_00;
     }
 
+    public Card(int[] v)
+    {
+        this.values = new int[4];
+        this.values[0] = v[0];
+        this.values[1] = v[1];
+        this.values[2] = v[2];
+        this.values[3] = v[3];
+    }
 
     public Card(int up,int down,int left,int right)
     {
@@ -51,6 +59,7 @@ public class Card {
     public int getDown() { return this.values[1]; }
     public int getLeft() { return this.values[2]; }
     public int getRight() { return this.values[3]; }
+    public int[] getValue() { return this.values; }
 
     public int getValue(int index)
     {

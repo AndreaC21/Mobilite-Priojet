@@ -15,104 +15,27 @@
 
     <!-- Deck -->
     <LinearLayout
-        android:id="@+id/premier"
+        android:id="@+id/deck_array"
         android:layout_width="match_parent"
         android:layout_height="100dp"
 
         android:layout_marginTop="50dp"
         android:layout_gravity="top"
-        android:background="@android:color/holo_red_dark">
+        android:background="@android:color/holo_red_dark"
+        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/deck_card1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Card1"
-           />
-
-        <Button
-            android:id="@+id/deck_card2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Card2"
-            />
-
-        <Button
-            android:id="@+id/deck_card3"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Card3"
-           />
-
-        <Button
-            android:id="@+id/deck_card4"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Card4"
-             />
-
-        <Button
-            android:id="@+id/deck_card5"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Card5"
-           />
     </LinearLayout>
 
     <!-- Selection_card -->
     <LinearLayout
+        android:id="@+id/card_array"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/holo_blue_light"
-        android:layout_below="@id/premier"
+        android:layout_below="@id/deck_array"
         android:orientation="horizontal"
         android:paddingTop="20dp">
 
-        <FrameLayout
-            android:layout_width="150dp"
-            android:layout_height="150dp">
-
-            <ImageButton
-                android:id="@+id/button1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/empty_card" />
-
-            <TextView
-                android:id="@+id/card_up_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/card_1_1_1_1"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_gravity="top|center"/>
-            <TextView
-                android:id="@+id/card_left_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="99"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_gravity="left|center"/>
-            <TextView
-                android:id="@+id/card_right_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="99"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_gravity="right|center"/>
-            <TextView
-                android:id="@+id/card_down_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="99"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_gravity="bottom|center"/>
-
-        </FrameLayout>
 
 
     </LinearLayout>

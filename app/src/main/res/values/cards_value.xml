@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="card_1_1_1_1">
-        <up>1</up>
-        <down>1</down>
-        <left>1</left>
-        <right>1</right>
-    </string>
-    <string name="card_2_2_2_2">
-        <up>2</up>
-        <down>2</down>
-        <left>2</left>
-        <right>2</right>
-    </string>
+    <integer-array name="card_0">
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+    </integer-array>
+    <integer-array name="card_1">
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+    </integer-array>
+    <integer-array name="card_2">
+        <item>6</item>
+        <item>6</item>
+        <item>6</item>
+        <item>6</item>
+    </integer-array>
 </resources>

@@ -26,7 +26,7 @@ public class Plateau {
 
     public void SetCase(int index,Card c,Player pturn)
     {
-        if ( index < 0 || index > 9) return;
+        if ( index < 0 || index >= 9) return;
 
         if ( isPlateauComplete()==false)
         {
@@ -35,12 +35,12 @@ public class Plateau {
             Pair<Integer,Card> p = new Pair<Integer,Card>(index,c);
             coups.add(p);
 
-            Log.d("tag","index plateau"+index);
-            Log.d("tag","index card"+c.getUp());
+            //Log.d("tag","index plateau"+index);
+            //Log.d("tag","index card"+c.getUp());
         }
     }
 
-    public int LastPostionPlayed()
+    public int lastPostionPlayed()
     {
         return this.coups.get(this.coups.size()-1).first;
     }

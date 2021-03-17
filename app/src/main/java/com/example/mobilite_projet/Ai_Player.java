@@ -15,11 +15,11 @@ public class Ai_Player extends Player{
         super(name,c);
     }
 
-    public void PlayCard(Game g)
+    public void SelectCard(Game g)
     {
         // Choose position
         Plateau p = g.getPlateau();
-        int indexLastPosition = p.LastPostionPlayed();
+        int indexLastPosition = p.lastPostionPlayed();
         Card lastCard = p.LastCardPlayed();
 
         int indexLowestValue = lastCard.getIndexLowerValue(-1);
@@ -31,14 +31,14 @@ public class Ai_Player extends Player{
             {
                 Card bestCard = getBestCard(indexLowestValue);
                 super.deck.RemoveCard(bestCard);
-                //p.SetCase(indexAiWantToPlay,bestCard);
+
                 g.PlayCard(indexAiWantToPlay,bestCard);
                 return;
             }
         }
         Card r = deck.getRandomCard();
         super.deck.RemoveCard(r);
-        //p.SetCase(getFirstEmptyPosition(p),r);
+
         g.PlayCard(getFirstEmptyPosition(p),r);
 
     }

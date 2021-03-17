@@ -2,8 +2,10 @@ package com.example.mobilite_projet;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 
 public class Game {
@@ -12,9 +14,9 @@ public class Game {
     private Player p1,pTurn;
     private Ai_Player p2;
     private int nbTurn;
-    private Handler handler;
     public static final int BOARD_COUNT = 9;
 
+    private  GameView gameView;
 
     public Game(Player p1, Ai_Player p2)
     {
@@ -24,14 +26,14 @@ public class Game {
         this.nbTurn = 0;
         this.pTurn = this.p1;
     }
-    public Game(Context c)
+    public Game(Context c,GameView gv)
     {
         this.p1 = new Player("Andrea", Color.BLUE);
         this.p2 = new Ai_Player("IA", Color.RED);
         this.plateau = new Plateau();
         this.nbTurn = 0;
         this.pTurn = this.p1;
-        handler = new Handler();
+      this.gameView = gv;
 
         this.p1.LoadDeck(c);
        // this.p1.CreateDeck();
@@ -65,8 +67,9 @@ public class Game {
         return String.valueOf(this.pTurn.name);
     }
 
-    public void nextPlayer(View view)
+    public void nextPlayer()
     {
+        //Log.d("tag","pturn"+this.pTurn.name);
         if ( this.pTurn == this.p1) this.pTurn = this.p2;
         else this.pTurn = this.p1;
 
@@ -74,24 +77,55 @@ public class Game {
 
         if ( this.pTurn==this.p2)
         {
-            this.p2.PlayCard(this);
-           nextPlayer(view);
-
+            this.p2.SelectCard(this);
         }
     }
 
     public void PlayCard(int indexPlateau,Card c)
     {
+
+        // Play card
         c.BelongTo(this.pTurn);
+
         this.plateau.SetCase(indexPlateau, c,this.pTurn);
-        this.Mechanic(indexPlateau);
+
+        gameView.invalidate();
+
+        // Attack and Attaque en sucession
+        Mechanic(indexPlateau);
+
+        // Remove card from dek
+        if ( this.pTurn == this.p1) this.p1.getDeck().RemoveCard(c);
+
+      gameView.invalidate();
+       // try { Thread.sleep(1000); }
+        //catch (InterruptedException ex) { android.util.Log.d("YourApplicationName", ex.toString()); }
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Write whatever to want to do after delay specified (1 sec)
+                Log.d("Handler", "Running Handler");
+                nextPlayer();
+            }
+        }, 1000);
+
     }
 
-    private void Mechanic(int currentIndexPlateau)
+    private final void Mechanic(int currentIndexPlateau)
     {
         if (currentIndexPlateau <0 || currentIndexPlateau >=9) return ;
+        gameView.invalidate();
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable()
+        {
+            @Override
+            public void run() {
+                //Write whatever to want to do after delay specified (1 sec)
+               // Log.d("Handler", "Running Handler");
 
-        Card currentCard = this.plateau.getCase(currentIndexPlateau).getContains();
+
+        Card currentCard = plateau.getCase(currentIndexPlateau).getContains();
 
         Card upCard = getContactCard(-3,currentIndexPlateau);
         Card downCard = getContactCard(3,currentIndexPlateau);
@@ -100,25 +134,27 @@ public class Game {
 
         if ( upCard!=null && currentCard.isWiningAgainstUp(upCard))
         {
-            upCard.BelongTo(this.pTurn);
+            upCard.BelongTo(pTurn);
             Mechanic(currentIndexPlateau-3);
         }
         if ( downCard!=null && currentCard.isWiningAgainstDown(downCard))
         {
-            downCard.BelongTo(this.pTurn);
+            downCard.BelongTo(pTurn);
             Mechanic(currentIndexPlateau+3);
         }
         if ( leftCard!=null && currentCard.isWiningAgainstLeft(leftCard))
         {
-            leftCard.BelongTo(this.pTurn);
+            leftCard.BelongTo(pTurn);
             Mechanic(currentIndexPlateau-1);
         }
         if ( rightCard!=null && currentCard.isWiningAgainstRight(rightCard))
         {
-            rightCard.BelongTo(this.pTurn);
+            rightCard.BelongTo(pTurn);
             Mechanic(currentIndexPlateau+1);
         }
 
+            }
+        }, 100);
     }
 
     /*a = -3 pour la carte du haut,

@@ -36,7 +36,7 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
 
     private Deck deck;
     private Button bouton=new Button(getContext());
-    public Game Game = new Game(getContext());
+    public Game Game = new Game(getContext(),this);
 
     public GameView(Context context) {
         super(context);
@@ -314,11 +314,12 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
                 rectf = computeBoardRect(i);
                 if ( rectf.contains(e.getX(), e.getY()) ) {
 
+                    Log.d("tag","play");
                     Game.PlayCard(i,selectedCard);
-                    deck.RemoveCard(selectedCard);
+
                     selectedCard = null;
-                    postInvalidate();
-                    Game.nextPlayer(this);
+                    //postInvalidate();
+
                     return true;
                 }
             }

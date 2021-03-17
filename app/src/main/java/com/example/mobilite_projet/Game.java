@@ -120,7 +120,7 @@ public class Game {
     private final void Mechanic(int currentIndexPlateau)
     {
         if (currentIndexPlateau <0 || currentIndexPlateau >=9) return ;
-        Log.d("tag","Turn: "+String.valueOf(this.nbTurn)+" Mechanic on Case: "+String.valueOf(currentIndexPlateau));
+        //Log.d("tag","Turn: "+String.valueOf(this.nbTurn)+" Mechanic on Case: "+String.valueOf(currentIndexPlateau));
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable()
         {

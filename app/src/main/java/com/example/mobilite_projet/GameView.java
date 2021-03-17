@@ -314,7 +314,7 @@ public class GameView extends View implements GestureDetector.OnGestureListener 
                 rectf = computeBoardRect(i);
                 if ( rectf.contains(e.getX(), e.getY()) ) {
 
-                    Log.d("tag","play");
+                   // Log.d("tag","play");
                     Game.PlayCard(i,selectedCard);
 
                     selectedCard = null;

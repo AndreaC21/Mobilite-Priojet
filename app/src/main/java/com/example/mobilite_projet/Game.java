@@ -105,7 +105,7 @@ public class Game {
             @Override
             public void run() {
                 //Write whatever to want to do after delay specified (1 sec)
-                Log.d("Handler", "Running Handler");
+               // Log.d("Handler", "Running Handler");
                 nextPlayer();
             }
         }, 1000);

@@ -21,6 +21,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -56,6 +57,7 @@ import javax.xml.transform.stream.StreamResult;
 public class DeckActivity extends AppCompatActivity {
 
     private int id_selectedCard,id_cardToReplace;
+    private int maxCardInCollection = 15;
     private NodeList nList_deck;
 
     private Document doc;
@@ -113,26 +115,64 @@ public class DeckActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    private boolean CardEqual(int[] a, int[]b)
+    {
+        if ( a.length != b.length ) return false;
+
+        int counter = 0;
+        for ( int i =0; i < a.length ; ++i)
+        {
+            if ( a[i] == b[i] ) counter++;
+        }
+        if ( counter== 4) return true;
+        return false;
+    }
+    private boolean CardAlreadyInDeck(int[] cardToReplace)
+    {
+        int[] cardDeck;
+        //Log.d("tag", "check in deck");
+        for (int i=0; i<nList_deck.getLength(); i++) {
+
+            Node node = nList_deck.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element element2 = (Element) node;
+
+                //Log.d("tag","up"+String.valueOf(getValue("up", element2)));
+                cardDeck = getValue(element2);
+                //Log.d("tag", String.valueOf(i)+ " - " +String.valueOf(CardEqual(cardDeck,cardToReplace)));
+                if ( CardEqual(cardDeck,cardToReplace)) return true;
+
+            }
+        }
+        return false;
+    }
     private void UpdateCard()
     {
         int id = getResources().getIdentifier("card_"+id_selectedCard, "array",getPackageName());
         int[] card = getResources().getIntArray(id);
+        int[] cardToReplace;
 
         Node node = nList_deck.item(id_cardToReplace);
         if (node.getNodeType() == Node.ELEMENT_NODE) {
             Element element2 = (Element) node;
 
-            element2.getElementsByTagName("up").item(0).setTextContent(String.valueOf(card[0]));
-            element2.getElementsByTagName("down").item(0).setTextContent(String.valueOf(card[1]));
-            element2.getElementsByTagName("left").item(0).setTextContent(String.valueOf(card[2]));
-            element2.getElementsByTagName("right").item(0).setTextContent(String.valueOf(card[3]));
+            cardToReplace = getValue(element2);
+
+            //Log.d("tag","Card in deck "+ String.valueOf(CardAlreadyInDeck(card)));
+            if ( ! CardAlreadyInDeck(card))
+            {
+                element2.getElementsByTagName("up").item(0).setTextContent(String.valueOf(card[0]));
+                element2.getElementsByTagName("down").item(0).setTextContent(String.valueOf(card[1]));
+                element2.getElementsByTagName("left").item(0).setTextContent(String.valueOf(card[2]));
+                element2.getElementsByTagName("right").item(0).setTextContent(String.valueOf(card[3]));
+                SaveChange();
+                DrawDeck();
+            }
 
            // Log.d("tag","done");
-
         }
 
-        SaveChange();
-        DrawDeck();
+
     }
 
     private void DrawDeck()
@@ -157,7 +197,8 @@ public class DeckActivity extends AppCompatActivity {
 
                     //Log.d("tag","up"+String.valueOf(getValue("up", element2)));
                     int[] card = getValue(element2);
-                    CreateCard(card,i, (LinearLayout) findViewById(R.id.deck_array),175,true);
+                   // CreateCard(card,i, (LinearLayout) findViewById(R.id.deck_array),175,true);
+                    addCardToDeckView(card,i);
                 }
             }
 
@@ -177,9 +218,8 @@ public class DeckActivity extends AppCompatActivity {
             id_cardToReplace = -1;
         }
     }
-    private void CreateCard(int[] card,int id,LinearLayout ll, int size,boolean isCardOfDeck)
+    private FrameLayout CreateCard(int[] card,int id,boolean isCardOfDeck)
     {
-       // LinearLayout ll = (LinearLayout) findViewById(R.id.card_array);
         FrameLayout fl = new FrameLayout(this);
         ImageButton ib = new ImageButton(this);
         TextView up = new TextView(this);
@@ -198,10 +238,11 @@ public class DeckActivity extends AppCompatActivity {
         down.setTextColor(Color.BLACK);
         left.setTextColor(Color.BLACK);
         right.setTextColor(Color.BLACK);
+
         ib.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
-                Log.d("tag", "click card_"+String.valueOf(id) + " isDeck"+isCardOfDeck);
+                //Log.d("tag", "click card_"+String.valueOf(id) + " isDeck"+isCardOfDeck);
                 SelectCard(id,isCardOfDeck);
             }
         });
@@ -215,11 +256,29 @@ public class DeckActivity extends AppCompatActivity {
         params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.RIGHT | Gravity.CENTER);
         fl.addView(right,params);
 
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        return fl;
+    }
 
-        params = new FrameLayout.LayoutParams(size, size);
+    private void addCardToDeckView(int[] card,int id)
+    {
+        int size = 175;
+
+        FrameLayout f = CreateCard(card, id ,true);
+        LinearLayout l = (LinearLayout) findViewById(R.id.deck_array);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(size, size);
         params.setMargins(0, 0, 50, 0);
-        ll.addView(fl, params);
+        l.addView(f,params);
+    }
+
+    private void addCardToCardView(int[] card,int id)
+    {
+        int size = 200;
+
+        FrameLayout f = CreateCard(card, id ,false);
+        androidx.gridlayout.widget.GridLayout grid = (androidx.gridlayout.widget.GridLayout) findViewById(R.id.card_array);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(size, size);
+        params.setMargins(0, 0, 50, 50);
+        grid.addView(f,params);
     }
 
 
@@ -271,15 +330,13 @@ public class DeckActivity extends AppCompatActivity {
         id_cardToReplace = -1;
         id_selectedCard = -1;
         Resources res = getResources();
-        int[] card1 = res.getIntArray(R.array.card_0);
-        int[] card2 = res.getIntArray(R.array.card_1);
 
         //Load Card to Select
-        for(int i = 0; i<2; i++) {
+        for(int i = 0; i<maxCardInCollection; ++i) {
 
-            int id = getResources().getIdentifier("card_"+i, "array",getPackageName());
-            int[] card = getResources().getIntArray(id);
-            CreateCard(card,i, (LinearLayout) findViewById(R.id.card_array),200,false);
+            int id = res.getIdentifier("card_"+i, "array",getPackageName());
+            int[] card = res.getIntArray(id);
+            addCardToCardView(card,i);
         }
 
         defaultLl = (LinearLayout) findViewById(R.id.deck_array);

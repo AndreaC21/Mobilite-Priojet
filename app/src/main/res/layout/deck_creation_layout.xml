@@ -10,33 +10,44 @@
         android:id="@+id/button_exit"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:text="menu"
-        android:layout_gravity="top|right"/>
+        android:layout_gravity="top|right"
+        android:text="menu" />
 
-    <!-- Deck -->
     <LinearLayout
         android:id="@+id/deck_array"
         android:layout_width="match_parent"
         android:layout_height="100dp"
 
-        android:layout_marginTop="50dp"
         android:layout_gravity="top"
+        android:layout_marginTop="50dp"
         android:background="@android:color/holo_red_dark"
         android:orientation="horizontal">
 
     </LinearLayout>
 
-    <!-- Selection_card -->
     <LinearLayout
-        android:id="@+id/card_array"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/holo_blue_light"
         android:layout_below="@id/deck_array"
+        android:background="@android:color/holo_blue_light"
         android:orientation="horizontal"
-        android:paddingTop="20dp">
+        android:paddingTop="20dp" />
 
+    <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/card_array"
+        app:orientation="horizontal"
+        app:columnCount="4"
+        app:rowCount="7"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/deck_array"
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"
 
+        android:background="@android:color/holo_blue_light"/>
 
-    </LinearLayout>
+    <!-- Deck -->
+
+    <!-- Selection_card -->
 </RelativeLayout >

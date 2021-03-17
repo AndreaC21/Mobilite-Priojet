@@ -1,21 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer-array name="card_0">
-        <item>1</item>
-        <item>1</item>
-        <item>1</item>
-        <item>1</item>
+    <integer-array name="card_0" type="balanced">
+        <item>4</item>
+        <item>5</item>
+        <item>4</item>
+        <item>5</item>
     </integer-array>
-    <integer-array name="card_1">
-        <item>2</item>
-        <item>2</item>
-        <item>2</item>
+    <integer-array name="card_1" type="balanced">
+        <item>5</item>
+        <item>4</item>
+        <item>4</item>
+        <item>5</item>
+    </integer-array>
+    <integer-array name="card_2" type="balanced">
+        <item>5</item>
+        <item>5</item>
+        <item>4</item>
+        <item>4</item>
+    </integer-array>
+    <!-- Card with Up value better than other -->
+    <integer-array name="card_5" type="up">
+        <item>9</item>
+        <item>3</item>
+        <item>4</item>
         <item>2</item>
     </integer-array>
-    <integer-array name="card_2">
+    <integer-array name="card_6" type="up">
+        <item>9</item>
+        <item>0</item>
+        <item>5</item>
+        <item>4</item>
+    </integer-array>
+    <integer-array name="card_7" type="up">
+        <item>8</item>
+        <item>5</item>
+        <item>2</item>
+        <item>3</item>
+    </integer-array>
+    <!-- Card with Down value better than other -->
+    <integer-array name="card_8" type="down">
+        <item>2</item>
+        <item>9</item>
+        <item>5</item>
+        <item>2</item>
+    </integer-array>
+    <integer-array name="card_9" type="down">
+        <item>0</item>
+        <item>9</item>
+        <item>4</item>
+        <item>5</item>
+    </integer-array>
+    <integer-array name="card_10" type="down">
+        <item>3</item>
+        <item>8</item>
+        <item>3</item>
+        <item>4</item>
+    </integer-array>
+    <!-- Card with Left value better than other -->
+    <integer-array name="card_11" type="left">
+        <item>4</item>
+        <item>2</item>
+        <item>9</item>
+        <item>3</item>
+    </integer-array>
+    <integer-array name="card_12" type="left">
+        <item>2</item>
+        <item>1</item>
+        <item>9</item>
         <item>6</item>
+    </integer-array>
+    <integer-array name="card_13" type="left">
+        <item>1</item>
+        <item>7</item>
+        <item>8</item>
+        <item>2</item>
+    </integer-array>
+    <!-- Card with Right value better than other -->
+    <integer-array name="card_14" type="right">
         <item>6</item>
-        <item>6</item>
-        <item>6</item>
+        <item>0</item>
+        <item>3</item>
+        <item>9</item>
+    </integer-array>
+    <integer-array name="card_3" type="right">
+        <item>1</item>
+        <item>7</item>
+        <item>1</item>
+        <item>9</item>
+    </integer-array>
+    <integer-array name="card_4" type="right">
+        <item>3</item>
+        <item>4</item>
+        <item>3</item>
+        <item>8</item>
     </integer-array>
 </resources>

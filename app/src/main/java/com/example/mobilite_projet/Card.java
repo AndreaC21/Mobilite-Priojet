@@ -34,13 +34,15 @@ public class Card {
         this.borderColor = 0xff_00_00_00;
     }
 
-    public Card(int[] v)
+    public Card(int[] v,Player p)
     {
         this.values = new int[4];
         this.values[0] = v[0];
         this.values[1] = v[1];
         this.values[2] = v[2];
         this.values[3] = v[3];
+        this.borderColor = 0xff_00_00_00;
+        this.belong = p;
     }
 
     public Card(int up,int down,int left,int right)

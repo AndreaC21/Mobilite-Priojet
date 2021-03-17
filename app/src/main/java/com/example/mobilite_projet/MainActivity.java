@@ -9,9 +9,6 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private GameView gameView;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
                 setContentView(R.layout.activity_main);
+
             }
         });
 

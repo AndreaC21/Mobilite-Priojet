@@ -1,5 +1,6 @@
 package com.example.mobilite_projet;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -23,15 +24,19 @@ public class Game {
         this.nbTurn = 0;
         this.pTurn = this.p1;
     }
-    public Game()
+    public Game(Context c)
     {
-        this.p1 = new Player("Andrea", Color.BLUE,new Deck(this.p1));
-        this.p2 = new Ai_Player("Quentin", Color.RED,new Deck(this.p2));
+        this.p1 = new Player("Andrea", Color.BLUE);
+        this.p2 = new Ai_Player("IA", Color.RED);
         this.plateau = new Plateau();
         this.nbTurn = 0;
         this.pTurn = this.p1;
         handler = new Handler();
 
+        this.p1.LoadDeck(c);
+       // this.p1.CreateDeck();
+        //this.p2.CreateDeck();
+        this.p2.CreateRandomCard(c);
     }
 
     public Player getP1(){return this.p1;}
@@ -84,7 +89,7 @@ public class Game {
 
     private void Mechanic(int currentIndexPlateau)
     {
-        if (currentIndexPlateau <0 || currentIndexPlateau >9) return ;
+        if (currentIndexPlateau <0 || currentIndexPlateau >=9) return ;
 
         Card currentCard = this.plateau.getCase(currentIndexPlateau).getContains();
 
@@ -130,7 +135,7 @@ public class Game {
         if ( a==-3 && currentIndexPlateau+a < 0) return null;
 
         //On veut la carte a gauche mais si on est sur la bordure a gauche, retourne null
-        if(a==-1 && currentIndexPlateau%3==0) return null;
+        if ( a==-1 && currentIndexPlateau%3==0) return null;
 
         if ( a==1 &&currentIndexPlateau%3==2) return null;
 

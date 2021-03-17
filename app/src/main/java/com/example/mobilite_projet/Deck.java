@@ -10,15 +10,13 @@ public class Deck {
     ArrayList<Card> deck;
 
     public final static int maxCard = 5;
+    public final static int maxCardinCollection = 15;
     public static Deck myDeck = new Deck();
 
     public Deck()
     {
         this.deck = new ArrayList<Card>(5);
-        for (int i=0; i < this.deck.size();++i)
-        {
-            this.deck.set(i,new Card());
-        }
+
     }
     public Deck(Player p){
 

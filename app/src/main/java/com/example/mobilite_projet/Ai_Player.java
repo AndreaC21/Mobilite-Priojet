@@ -1,13 +1,18 @@
 package com.example.mobilite_projet;
 
+import android.content.Context;
+import android.content.res.Resources;
+
+import java.util.Random;
+
 public class Ai_Player extends Player{
 
     // 0->agressif,1->moyen,2->defensif
     private int type_action;
 
-    public Ai_Player(String name,int c,Deck d)
+    public Ai_Player(String name,int c)
     {
-        super(name,c,d);
+        super(name,c);
     }
 
     public void PlayCard(Game g)
@@ -54,7 +59,6 @@ public class Ai_Player extends Player{
         return -1;
 
     }
-
 
     // Retourne l'index au pose a indexCard
     /*
@@ -103,14 +107,32 @@ public class Ai_Player extends Player{
             default: return -1;
         }
     }
-
     private boolean isIndexCaseWantedValid(int indexAiWantToPlay)
     {
        // if ( indexPlayer < 0 || indexPlayer > 9) return false;
-        if ( indexAiWantToPlay < 0 || indexAiWantToPlay > 9) return false;
+        if ( indexAiWantToPlay < 0 || indexAiWantToPlay >= 9) return false;
 
         return true;
+    }
 
+    public int getRandomInt(int max)
+    {
+        Random rand = new Random();
+        return rand.nextInt(max);
+
+    }
+    public void CreateRandomCard(Context c)
+    {
+        Resources res = c.getResources();
+        super.deck = new Deck(this);
+
+        for(int i = 0; i<Deck.maxCard; ++i)
+        {
+            int id = res.getIdentifier("card_"+getRandomInt(Deck.maxCardinCollection), "array",c.getPackageName());
+            int[] card = res.getIntArray(id);
+
+            this.deck.AddCard(new Card(card,this));
+        }
 
     }
 }

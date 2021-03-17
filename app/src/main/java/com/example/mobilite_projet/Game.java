@@ -69,6 +69,8 @@ public class Game {
 
     public void nextPlayer()
     {
+
+
         //Log.d("tag","pturn"+this.pTurn.name);
         if ( this.pTurn == this.p1) this.pTurn = this.p2;
         else this.pTurn = this.p1;
@@ -97,25 +99,28 @@ public class Game {
         // Remove card from dek
         if ( this.pTurn == this.p1) this.p1.getDeck().RemoveCard(c);
 
-      gameView.invalidate();
-       // try { Thread.sleep(1000); }
-        //catch (InterruptedException ex) { android.util.Log.d("YourApplicationName", ex.toString()); }
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //Write whatever to want to do after delay specified (1 sec)
-               // Log.d("Handler", "Running Handler");
-                nextPlayer();
-            }
-        }, 1000);
+        if ( !this.isFinished())
+        {
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //Write whatever to want to do after delay specified (1 sec)
+                    // Log.d("Handler", "Running Handler");
+                    nextPlayer();
+                    gameView.invalidate();
+                }
+            }, 1500);
+        }
+
+
 
     }
 
     private final void Mechanic(int currentIndexPlateau)
     {
         if (currentIndexPlateau <0 || currentIndexPlateau >=9) return ;
-        gameView.invalidate();
+        Log.d("tag","Turn: "+String.valueOf(this.nbTurn)+" Mechanic on Case: "+String.valueOf(currentIndexPlateau));
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable()
         {
@@ -132,29 +137,30 @@ public class Game {
         Card leftCard = getContactCard(-1,currentIndexPlateau);
         Card rightCard = getContactCard(1,currentIndexPlateau);
 
-        if ( upCard!=null && currentCard.isWiningAgainstUp(upCard))
+        if ( upCard!=null && currentCard.isWiningAgainstUp(upCard) && upCard.getBelongPlayer()!=currentCard.getBelongPlayer())
         {
             upCard.BelongTo(pTurn);
             Mechanic(currentIndexPlateau-3);
         }
-        if ( downCard!=null && currentCard.isWiningAgainstDown(downCard))
+        if ( downCard!=null && currentCard.isWiningAgainstDown(downCard) && downCard.getBelongPlayer()!=currentCard.getBelongPlayer())
         {
             downCard.BelongTo(pTurn);
             Mechanic(currentIndexPlateau+3);
         }
-        if ( leftCard!=null && currentCard.isWiningAgainstLeft(leftCard))
+        if ( leftCard!=null && currentCard.isWiningAgainstLeft(leftCard) && leftCard.getBelongPlayer()!=currentCard.getBelongPlayer())
         {
             leftCard.BelongTo(pTurn);
             Mechanic(currentIndexPlateau-1);
         }
-        if ( rightCard!=null && currentCard.isWiningAgainstRight(rightCard))
+        if ( rightCard!=null && currentCard.isWiningAgainstRight(rightCard) && rightCard.getBelongPlayer()!=currentCard.getBelongPlayer())
         {
             rightCard.BelongTo(pTurn);
             Mechanic(currentIndexPlateau+1);
         }
+                gameView.invalidate();
 
             }
-        }, 100);
+        }, 200);
     }
 
     /*a = -3 pour la carte du haut,
